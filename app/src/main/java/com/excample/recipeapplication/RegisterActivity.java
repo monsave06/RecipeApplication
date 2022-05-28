@@ -12,17 +12,16 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class RegisterActivity extends AppCompatActivity {
-     EditText mName ,mEmail,mPassword1,mPassword2 ;
-     Button mRegister ;
-     FirebaseAuth mAuth;
-     ProgressBar progressBar;
+    EditText mName ,mEmail,mPassword1,mPassword2 ;
+    Button mRegister ;
+    FirebaseAuth mAuth;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
         mRegister = findViewById(R.id.buttonRe);
 
         mAuth = FirebaseAuth.getInstance();
-       progressBar = findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.progressBar);
 
 //        if(mAuth.getCurrentUser() != null){
 //            startActivity(new Intent(getApplicationContext(),MainActivity.class));
@@ -48,7 +47,12 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword1.getText().toString().trim();
-
+                String name = mName.getText().toString().trim();
+                String password2 =mPassword2.toString().trim();
+                if(TextUtils.isEmpty(name)){
+                    mName.setError("Error Name");
+                    return;
+                }
                 if (TextUtils.isEmpty(email)) {
                     mEmail.setError("Error Email");
                     return;
@@ -59,6 +63,14 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 if (password.length() < 4) {
                     mPassword1.setError(" password >= 4");
+                    return;
+                }
+                if (TextUtils.isEmpty(password2)) {
+                    mPassword2.setError("Error password Again");
+                    return;
+                }
+                if (password2.length() < 4) {
+                    mPassword2.setError(" password >= 4");
                     return;
                 }
                 progressBar.setVisibility(View.VISIBLE);
@@ -75,6 +87,6 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
             }
-       });
+        });
     }
 }
