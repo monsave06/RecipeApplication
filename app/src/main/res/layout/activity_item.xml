@@ -25,9 +25,17 @@
         <LinearLayout
             android:layout_width="301dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/imageButtonz"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="190dp"
+                android:onClick="onclickfavoritemenu"
+                app:srcCompat="@android:drawable/btn_star_big_on" />
 
             <TextView
                 android:id="@+id/foodname"
@@ -37,11 +45,43 @@
                 android:textColor="#100F0F"
                 android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/foodcalories"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Calories" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Calories : " />
+
+                <TextView
+                    android:id="@+id/foodcalories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Calories" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/texttime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time : " />
+
+                <TextView
+                    android:id="@+id/foodtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="TimeFood" />
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

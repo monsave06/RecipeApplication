@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,18 +31,6 @@ public class recipeAdepter extends RecyclerView.Adapter<recipeAdepter.recipeHold
     private List<recipe> recipeList;
     private List<recipe> Listr ;
     private List<recipe> recipett;
-    String names ;
-    String caloriess = "";
-    String Images = "";
-    String carbss = "";
-    String descriptions = "";
-    String difficultys = "";
-    String fatss = "";
-    String headlines = "";
-    String ids = "";
-    String proteinss = "";
-    String thumbs = "";
-    String times ="";
 
     public recipeAdepter(Context context,List<recipe> recipes){
         this.context = context;
@@ -64,6 +53,7 @@ public class recipeAdepter extends RecyclerView.Adapter<recipeAdepter.recipeHold
           recipe recipe1 =recipeList.get(position);
           holder.name.setText(recipe1.getName());
           holder.calories.setText(recipe1.getCalories());
+          holder.time.setText(recipe1.getTime().substring(2,5));
         Glide.with(context).load(recipe1.getImage()).into(holder.imageView);
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
@@ -101,8 +91,9 @@ public class recipeAdepter extends RecyclerView.Adapter<recipeAdepter.recipeHold
 
     public class recipeHolder extends RecyclerView.ViewHolder{
          ImageView imageView ;
-         TextView name ,calories;
+         TextView name ,calories,time;
          LinearLayout layout;
+         ImageButton imageButton;
 
         public recipeHolder(@NonNull View itemView) {
             super(itemView);
@@ -110,7 +101,9 @@ public class recipeAdepter extends RecyclerView.Adapter<recipeAdepter.recipeHold
             imageView = itemView.findViewById(R.id.Viewimage);
             name = itemView.findViewById(R.id.foodname);
             calories = itemView.findViewById(R.id.foodcalories);
+            time = itemView.findViewById(R.id.foodtime);
             layout = itemView.findViewById(R.id.mainlayout);
+            imageButton = itemView.findViewById(R.id.imageButtonz);
         }
     }
 }

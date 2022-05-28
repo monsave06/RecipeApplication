@@ -3,11 +3,14 @@ package com.excample.recipeapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -23,6 +26,7 @@ public class DetailActivity extends AppCompatActivity {
         TextView fatsF = findViewById(R.id.Textfats);
         TextView carbF = findViewById(R.id.Textcarbos);
         TextView caloriesF = findViewById(R.id.Textcalories);
+        TextView time =findViewById(R.id.Texttime);
 
         Bundle bundle = getIntent().getExtras();
         String names = bundle.getString("name");
@@ -47,9 +51,15 @@ public class DetailActivity extends AppCompatActivity {
         fatsF.setText(fatss);
         carbF.setText(carbss);
         caloriesF.setText(caloriess);
+        time.setText(times.substring(2,4)+" minute");
 
 
 
 
+    }
+    public void logout(View view){
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+        finish();
     }
 }

@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.VoiceInteractor;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private List<recipe> recipeList;
     private List<recipe> resultList;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +53,17 @@ public class MainActivity extends AppCompatActivity {
         resultList =new ArrayList<>();
         fetchRecipe();
         this.queryFirebase();
-    }
 
+        Intent intent = getIntent();
+        email = intent.getStringExtra("email");
+        System.out.println(email);
+    }
+    public void onclickfavoritemenu(View view){
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://recipeapplication-70c65-default-rtdb.firebaseio.com/");
+        DatabaseReference myRef= database.getReference("User/"+email);
+        User user = new User();
+        user.getMenu().add(new String());
+    }
 
     private void fetchRecipe() {
         String url="https://hf-android-app.s3-eu-west-1.amazonaws.com/android-test/recipes.json";
@@ -152,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
 
     }
 

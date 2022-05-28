@@ -16,17 +16,24 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText mName ,mEmail,mPassword1,mPassword2 ;
     Button mRegister ;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
+    private List<User> ListUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        ListUser =new ArrayList<>();
 
         mName = findViewById(R.id.editTextName);
         mEmail = findViewById(R.id.editTextEmail);
@@ -49,6 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = mPassword1.getText().toString().trim();
                 String name = mName.getText().toString().trim();
                 String password2 =mPassword2.toString().trim();
+
                 if(TextUtils.isEmpty(name)){
                     mName.setError("Error Name");
                     return;
@@ -80,12 +88,29 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(RegisterActivity.this,"userCreact",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
                         }else{
                             Toast.makeText(RegisterActivity.this,"Error"+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+                String users[] = email.split("@");
+                User user =new User(users[0],name,email,password);
+                ListUser.add(user);
+                this.adduser(ListUser);
+            }
+
+            private void adduser(List<User> listUser) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance("https://recipeapplication-70c65-default-rtdb.firebaseio.com/");
+                DatabaseReference myRef= database.getReference("User");
+                for(int i =0 ;i <listUser.size();i++){
+
+                    User user1 = new User(listUser.get(i).getId(),listUser.get(i).getName()
+                            ,listUser.get(i).getEmail(),listUser.get(i).getPassword());
+
+                    DatabaseReference rbef = myRef.child(user1.getId());
+                    rbef.setValue(user1);
+                }
             }
         });
     }
